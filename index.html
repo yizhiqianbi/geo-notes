@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEO 实战：让 AI 搜索说出你的名字 · 一支铅笔</title>
+<meta name="description" content="以一家佛山空调工厂的官网为样本，记录 GEO / SEO 的完整做法：六项体检、AI 问答监测、实体消歧、一型号一页面、站外信源和上线当天的收录实测。">
+<link rel="canonical" href="https://yizhiqianbi.github.io/geo-notes/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GEO 实战：让 AI 搜索说出你的名字">
+<meta property="og:description" content="体检分 GEO 92，AI 却只在被点名时才提到我们。诊断、改法和数据。">
+<meta property="og:url" content="https://yizhiqianbi.github.io/geo-notes/">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "GEO 实战：让 AI 搜索说出你的名字",
+ "description": "以一家佛山空调工厂的官网为样本，记录 GEO / SEO 的完整做法：六项体检、AI 问答监测、实体消歧、一型号一页面、站外信源和上线当天的收录实测。",
+ "datePublished": "2026-11-01",
+ "dateModified": "2026-11-01",
+ "inLanguage": "zh-CN",
+ "author": {"@type": "Person", "name": "一支铅笔", "url": "https://yizhiqianbi.github.io/blog/"},
+ "mainEntityOfPage": "https://yizhiqianbi.github.io/geo-notes/",
+ "about": ["Generative Engine Optimization", "Search Engine Optimization", "Structured data"],
+ "mentions": [{"@type": "Organization", "name": "HAFYOUNG", "legalName": "Foshan Hanyang Intelligent Manufacturing Co., Ltd.", "url": "https://www.hafyoung-cooling.com/"}]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1614;
+  --paper:#f4f0e8;
+  --paper-2:#ebe4d4;
+  --accent:#c8421f;
+  --accent-soft:#e8b89c;
+  --blue:#2d4a6e;
+  --green:#5a6b3a;
+  --gold:#b8924a;
+  --line:rgba(26,22,20,0.18);
+  --muted:rgba(26,22,20,0.55);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Serif SC','Fraunces',Georgia,serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.75;
+  font-size:16px;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(184,146,74,0.06) 0, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(200,66,31,0.04) 0, transparent 50%);
+  overflow-x:hidden;
+}
+a{color:var(--blue);text-underline-offset:3px}
+a:hover{color:var(--accent)}
+.masthead{
+  border-bottom:3px double var(--ink);
+  padding:56px 60px 32px;
+}
+.masthead-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:28px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:14px;
+}
+.masthead-top a{color:inherit;text-decoration:none}
+.masthead-top a:hover{color:var(--accent)}
+.masthead h1{
+  font-family:'Fraunces',serif;
+  font-weight:300;
+  font-size:clamp(40px,5.8vw,76px);
+  line-height:1.02;
+  letter-spacing:-0.025em;
+  margin-bottom:20px;
+  overflow-wrap:anywhere;
+}
+.masthead h1 em{font-style:italic;color:var(--accent);font-weight:400}
+.byline{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:18px;
+  color:var(--muted);
+  margin-bottom:24px;
+}
+.subtitle{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:15.5px;
+  max-width:820px;
+  line-height:1.7;
+}
+.tags{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap}
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:5px 11px;
+  border:1px solid var(--ink);
+}
+.tag.filled{background:var(--ink);color:var(--paper)}
+section{
+  padding:60px;
+  border-bottom:1px solid var(--line);
+}
+.section-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--accent);
+  margin-bottom:12px;
+  display:block;
+}
+.section-title{
+  font-family:'Fraunces',serif;
+  font-weight:400;
+  font-size:clamp(30px,3.8vw,46px);
+  line-height:1.1;
+  letter-spacing:-0.015em;
+  margin-bottom:36px;
+  max-width:900px;
+}
+.section-title em{font-style:italic;color:var(--accent)}
+.body-text{max-width:880px}
+.body-text p{
+  margin-bottom:18px;
+  font-family:'Noto Serif SC',serif;
+}
+.body-text ul,.body-text ol{margin:0 0 18px 1.3em}
+.body-text li{margin-bottom:10px}
+.body-text h3{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:18px;
+  font-weight:600;
+  margin:34px 0 12px;
+}
+.body-text strong{color:var(--accent);font-weight:600}
+.body-text em{color:var(--blue);font-style:italic}
+code{font-family:'JetBrains Mono',monospace;font-size:0.88em;background:var(--paper-2);padding:1px 5px}
+.tldr{
+  background:var(--ink);
+  color:var(--paper);
+  padding:52px 60px;
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:60px;
+  position:relative;
+}
+.tldr::before{
+  content:'OVERVIEW';
+  position:absolute;
+  top:18px;
+  right:30px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.3em;
+  color:var(--accent-soft);
+}
+.tldr h2{
+  font-family:'Fraunces',serif;
+  font-weight:300;
+  font-size:36px;
+  line-height:1.15;
+  font-style:italic;
+}
+.tldr h2 strong{
+  display:block;
+  color:var(--accent-soft);
+  font-style:normal;
+  font-size:52px;
+  line-height:1;
+  margin-bottom:10px;
+}
+.tldr-content{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:15px;
+  line-height:1.85;
+}
+.tldr-content p{margin-bottom:16px}
+.tldr-content strong{color:var(--accent-soft)}
+.pullquote{
+  margin:40px 0;
+  padding:36px 44px;
+  border-left:4px solid var(--accent);
+  background:var(--paper-2);
+  font-family:'Fraunces','Noto Serif SC',serif;
+  font-style:italic;
+  font-size:22px;
+  line-height:1.55;
+  font-weight:300;
+  max-width:920px;
+}
+.insight{
+  margin:40px 0;
+  padding:34px 38px;
+  border:1px solid var(--ink);
+  position:relative;
+  background:var(--paper);
+  max-width:960px;
+}
+.insight-label{
+  position:absolute;
+  top:-12px;
+  left:22px;
+  background:var(--paper);
+  padding:0 12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.2em;
+  color:var(--accent);
+  text-transform:uppercase;
+}
+.insight h3{
+  font-family:'Fraunces','Noto Serif SC',serif;
+  font-size:23px;
+  font-weight:500;
+  margin-bottom:16px;
+  font-style:italic;
+  line-height:1.3;
+}
+.insight p{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:14.5px;
+  line-height:1.9;
+  margin-bottom:12px;
+}
+.formula,.code-block{
+  margin:18px 0;
+  padding:16px 22px;
+  background:var(--paper-2);
+  border-left:3px solid var(--ink);
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  line-height:1.7;
+  overflow-x:auto;
+  white-space:pre;
+  max-width:880px;
+}
+table.cmp{
+  width:100%;
+  max-width:960px;
+  border-collapse:collapse;
+  margin:32px 0;
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:13.5px;
+}
+table.cmp th,table.cmp td{
+  padding:13px 14px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--line);
+}
+table.cmp th{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  background:var(--paper-2);
+  border-bottom:2px solid var(--ink);
+}
+table.cmp td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+table.cmp tr.best td{background:rgba(200,66,31,0.06);font-weight:600}
+.footer{
+  padding:40px 60px;
+  background:var(--ink);
+  color:var(--paper);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+}
+.footer a{color:inherit}
+.footer-right{text-align:right;color:rgba(244,240,232,0.6)}
+@media (max-width:900px){
+  .masthead,section,.tldr{padding:38px 20px}
+  .masthead-top{flex-wrap:wrap;gap:8px 14px;align-items:flex-start}
+  .masthead h1{font-size:clamp(34px,12vw,48px);letter-spacing:0}
+  .tldr{grid-template-columns:1fr;gap:32px}
+  table.cmp{display:block;max-width:100%;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  .formula,.code-block,.insight{max-width:100%;overflow-x:auto}
+  .pullquote{padding:24px 22px;font-size:19px}
+  .footer{padding:30px 20px;flex-direction:column;align-items:flex-start;gap:10px}
+  .footer-right{text-align:left}
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-top">
+    <a href="https://yizhiqianbi.github.io/blog/">← 一支铅笔 Blog</a>
+    <span>GEO / SEO · 2026.11.01</span>
+  </div>
+  <h1>GEO 实战：让 AI 搜索<em style="white-space:nowrap">说出你的名字</em></h1>
+  <p class="byline">Audit · Monitoring · Entity · Pages · Off-site · Indexing</p>
+  <p class="subtitle">样本是一家佛山顺德的户外便携空调工厂官网（<a href="https://www.hafyoung-cooling.com/">HAFYOUNG SpaceCool</a>）。这篇记录我做 GEO 的完整流程：怎么给网站打分、怎么监测 AI 的回答、监测暴露了哪些问题、站内站外各改了什么，以及上线当天搜索引擎和 AI 爬虫的真实反应。</p>
+  <div class="tags">
+    <span class="tag filled">GEO</span>
+    <span class="tag">SEO</span>
+    <span class="tag">AI Search</span>
+    <span class="tag">Structured Data</span>
+    <span class="tag">B2B</span>
+  </div>
+</header>
+
+<section class="tldr">
+  <div>
+    <h2><strong>核心</strong>被点名才出现</h2>
+  </div>
+  <div class="tldr-content">
+    <p><strong>Problem.</strong> 站内体检已经到 SEO 99 / GEO 92，但向 Perplexity 问 20 个买家会问的问题，只有 6 个回答提到我们，而且全是问题里本来就带品牌名的。14 个品类问题（「哪家中国工厂做帐篷空调」「OEM 起订量多少」）一次都没提到。</p>
+    <p><strong>Method.</strong> 把 GEO 拆成六项可打分的体检，再加一套每周自动跑的 AI 问答监测。按监测暴露的问题改站：一个型号一个页面，指南对准买家问题，品牌消歧，改掉会让 AI 串型号的措辞，最后主动推给搜索引擎。</p>
+    <p><strong>Result.</strong> 体检 GEO 从 60 分到 92 分。新页面推送给 Bing 后几分钟内就被抓取。统计上线第一天就记录到 ClaudeBot、OAI-SearchBot、GPTBot、PerplexityBot 来访。</p>
+    <p><strong>Cost.</strong> 站内能做的有上限。品类问题里 AI 引用最多的是中国制造网和阿里系的 Accio，这部分只能靠站外铺。新页面进入 AI 答案通常要 1 到 3 周。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 1 · POSITIONING</span>
+  <h2 class="section-title">GEO 和 SEO：<em>差在检索之后</em></h2>
+  <div class="body-text">
+    <p>SEO 的目标是页面排名，GEO 的目标是在 AI 生成的答案里被<strong>提到</strong>、被<strong>引用</strong>。</p>
+    <p>AI 搜索回答一个问题，大致分四步：改写问题，调搜索接口取回一批网页，读这些网页的正文，综合成答案并附上引用。前两步和传统搜索是同一套机制，所以 SEO 仍然是地基：没被收录、排不进前几十条的页面，根本进不了模型的候选集。</p>
+    <p>差别在后两步。模型只引用它<em>读得懂</em>、能<em>直接摘出事实</em>的页面；在提到一家公司之前，它还得先确认「这家公司是谁」。于是 GEO 要优化的对象，从「关键词和排名」变成了三件事：</p>
+    <ol>
+      <li><strong>抓得到</strong>：AI 爬虫能访问，正文不靠 JavaScript 渲染。</li>
+      <li><strong>认得出</strong>：公司、品牌、型号是清楚的实体，不和别人混。</li>
+      <li><strong>愿意引用</strong>：页面上有带单位的硬事实，一个问题能在一页里找到完整答案。</li>
+    </ol>
+  </div>
+  <div class="pullquote">SEO 决定 AI 能不能找到你，GEO 决定 AI 找到之后愿不愿意引用你。</div>
+</section>
+
+<section>
+  <span class="section-num">§ 2 · AUDIT</span>
+  <h2 class="section-title">体检：<em>把 GEO 拆成六项打分</em></h2>
+  <div class="body-text">
+    <p>我在客服平台里写了一个站点体检：抓 sitemap 里的全部页面，解析 HTML 和 JSON-LD，同时出 SEO 和 GEO 两张评分卡。SEO 卡是常规项（抓取收录、标题描述、内容量、移动端、结构化数据），下面只列 GEO 卡。</p>
+  </div>
+  <table class="cmp">
+    <thead><tr><th>维度</th><th>满分</th><th>检查什么</th><th>本站现在</th></tr></thead>
+    <tbody>
+      <tr><td>AI 爬虫可访问性</td><td class="num">20</td><td>robots.txt 是否放行 GPTBot、OAI-SearchBot、ClaudeBot、PerplexityBot、Google-Extended；用这些爬虫的 UA 实际请求首页，看会不会被 WAF 拦截；正文是不是服务端直出；有没有 llms.txt</td><td class="num">20</td></tr>
+      <tr><td>品牌实体清晰度</td><td class="num">20</td><td>Organization 的 name、legalName、alternateName、url、logo；sameAs 官方账号；结构化数据里的联系方式</td><td class="num">15</td></tr>
+      <tr class="best"><td>可被引用的事实</td><td class="num">25</td><td>页面上带单位的数字有多少；有没有参数表；Product 是否带 additionalProperty、weight</td><td class="num">25</td></tr>
+      <tr><td>结构化数据</td><td class="num">15</td><td>Product 的 brand 和 model；FAQPage；Article / VideoObject；JSON-LD 能否解析</td><td class="num">15</td></tr>
+      <tr><td>问答与专题</td><td class="num">10</td><td>5 个以上问答；选购指南或博客的篇数</td><td class="num">7</td></tr>
+      <tr><td>信任信号</td><td class="num">10</td><td>电话、邮箱、地址；认证；成立年份、工厂面积、产能等公司事实</td><td class="num">10</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text">
+    <p>第一次体检 GEO 只有 60 分，主要缺在事实和结构化数据：产品只有卖点短语，没有参数表，Product 里没有参数。补完参数表、Product 的 additionalProperty、FAQ 和工厂事实之后升到 92 分。剩下的 8 分扣在 sameAs（需要官方账号链接）和指南篇数上。</p>
+  </div>
+  <div class="insight">
+    <span class="insight-label">为什么事实权重最高</span>
+    <h3>AI 引用的几乎都是带单位的数字</h3>
+    <p>买家问「这台能制冷多大空间」「多重」「起订量多少」，模型要从页面里摘出一个能直接放进答案的事实，比如 6000BTU、13kg、100 台。「精工打造、极致体验」这类营销句里没有任何可摘的东西。改完之后，这个站 10 个页面上一共有约 649 个带单位的数字。</p>
+    <p>评分里我把「数字的数量」当成代理指标，它不是目的。真正的目的是：任何一个参数问题，都能在某一页找到一句自带主语、带单位的话来回答。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 3 · MONITORING</span>
+  <h2 class="section-title">监测：<em>体检分高，不等于 AI 会提到你</em></h2>
+  <div class="body-text">
+    <p>体检只能说明网站「适合被引用」，引不引用得看 AI 的实际回答。监测的做法如下：</p>
+    <ul>
+      <li>用模型根据知识库生成 20 个问题，覆盖三类：不带品牌的品类问题、带品牌的问题、多语言问题（西班牙语、德语、法语）。</li>
+      <li>通过 OpenRouter 调 Perplexity Sonar 逐个提问。它会实时联网检索并返回引用列表，最接近真实用户看到的答案。</li>
+      <li>对每个回答判断四件事：提没提到品牌、有没有引用官网、提到了哪些竞品、引用了哪些域名。</li>
+      <li>一轮 20 题的成本约 0.11 美元，每周自动跑一次，看趋势。</li>
+    </ul>
+  </div>
+  <table class="cmp">
+    <thead><tr><th>问题类型</th><th>题数</th><th>提到我们</th><th>引用官网</th></tr></thead>
+    <tbody>
+      <tr><td>品类问题（不带品牌）</td><td class="num">14</td><td class="num">0</td><td class="num">0</td></tr>
+      <tr class="best"><td>品牌问题</td><td class="num">6</td><td class="num">6</td><td class="num">4</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text">
+    <p>品类问题的答案都引用了谁？把 20 个回答的引用按域名合计：</p>
+  </div>
+  <table class="cmp">
+    <thead><tr><th>被引用的来源</th><th>次数</th><th>是什么</th></tr></thead>
+    <tbody>
+      <tr><td>made-in-china.com（含各店铺子域名）</td><td class="num">80+</td><td>B2B 平台：厂家列表页、店铺页、商品页</td></tr>
+      <tr><td>accio.com（含 de.accio.com）</td><td class="num">34</td><td>阿里巴巴的 AI 采购助手，读的是阿里商品数据</td></tr>
+      <tr><td>leroymerlin.fr、bestbuy.com、lowes.com 等</td><td class="num">30+</td><td>零售商品页</td></tr>
+      <tr><td>youtube.com</td><td class="num">8</td><td>测评和演示视频</td></tr>
+      <tr><td>alibaba.com、globalsources.com</td><td class="num">12</td><td>B2B 平台</td></tr>
+      <tr class="best"><td>hafyoung-cooling.com</td><td class="num">6</td><td>只出现在品牌问题里</td></tr>
+    </tbody>
+  </table>
+  <div class="pullquote">问品牌，AI 找得到你；问品类，AI 只相信平台。</div>
+  <div class="body-text">
+    <p>原因在检索阶段。问「哪家中国工厂做 X」时，搜索接口返回的主要是 B2B 平台的列表页，因为这些页面恰好按「厂家 + 品类 + 参数」组织，和问题的结构完全对得上。一家工厂的单个官网，很难挤进这个候选集。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 4 · FAILURES</span>
+  <h2 class="section-title">AI 答错的<em>三种方式</em></h2>
+  <div class="body-text">
+    <p>品牌问题虽然都提到了我们，但细读回答，有三类错误，每一类都对应一个站内可以修的原因。</p>
+    <h3>1. 实体撞名</h3>
+    <p>SpaceCool 这个名字，和日本做辐射制冷膜的 SPACECOOL、SpaceCool Energies 等公司撞了。有一个回答直接写「查不到 SpaceCool C18 这款产品；SPACECOOL 是一家日本的辐射制冷材料公司」。</p>
+    <p>改法分三处：</p>
+    <ul>
+      <li>Brand 加 <code>@id</code>、<code>alternateName: "HAFYOUNG SpaceCool"</code> 和 <code>disambiguatingDescription</code>。</li>
+      <li>FAQ 和 llms.txt 里明写「与日本 SPACECOOL Inc. 无关」。</li>
+      <li>对外统一用「HAFYOUNG SpaceCool」全称。</li>
+    </ul>
+    <h3>2. 属性错绑</h3>
+    <p>首页把四款机型放在同一页，COG-2+ 的 "dual temperature mode" 被 AI 安到了 C18 头上。原因是同一页里多个实体并列，属性归属靠视觉位置区分，模型读纯文本时这条边界就消失了。</p>
+    <p>改法：一个型号一个 URL，每页只讲一个实体。有歧义的说法改成自带主语的句子：「COG-2+ 是 COG-2 的冷暖款，制热 2000BTU；COG-2 只制冷。」</p>
+    <h3>3. 引用旧网址</h3>
+    <p>AI 引用了老站的 <code>/products/…html</code>。这些地址早就有 301，但跳到的是首页上的锚点，没有落到具体型号。现在每个旧型号地址都 301 到对应的型号页。</p>
+  </div>
+  <div class="insight">
+    <span class="insight-label">写给模型看的文字</span>
+    <h3>每句话都能单独拿出来引用</h3>
+    <p>每句自带主语，用型号全称，不写「该款」「同上」；数字一律带单位；一句话只放一个事实；对比关系写成完整的句子，不靠表格的位置暗示。</p>
+    <p>检验方法很简单：随手抽一句话贴进聊天框，不给任何上下文，看它的意思还成不成立。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 5 · ON-SITE</span>
+  <h2 class="section-title">站内：<em>六层，从抓取到测量</em></h2>
+  <div class="body-text">
+    <h3>抓取层</h3>
+    <p>robots.txt 对所有爬虫全部放行，并声明 sitemap。页面是静态 HTML，正文直接写在服务端返回的页面里。再用每个 AI 爬虫的 UA 实际请求一次首页，确认 Cloudflare 的防火墙没有误拦。</p>
+  </div>
+  <div class="code-block">User-agent: *
+Allow: /
+
+Sitemap: https://www.hafyoung-cooling.com/sitemap.xml</div>
+  <div class="body-text">
+    <p>另外放了一份 <a href="https://www.hafyoung-cooling.com/llms.txt">llms.txt</a>：用一页纯文本写清公司是谁、各型号参数、指南链接、常见问题和联系方式。</p>
+    <h3>实体层</h3>
+    <p>Organization 写全 legalName、alternateName（含中文注册名）、地址、电话。Brand 和 Product 都给 <code>@id</code>，型号页、指南、首页之间用 <code>@id</code> 互相引用，让不同页面上的同一个产品被认成同一个实体。</p>
+  </div>
+  <div class="code-block">{
+ "@type": "Brand",
+ "@id": "https://www.hafyoung-cooling.com/#brand",
+ "name": "SpaceCool",
+ "alternateName": "HAFYOUNG SpaceCool",
+ "disambiguatingDescription": "SpaceCool portable air conditioners by HAFYOUNG of Foshan,
+   China; not related to SPACECOOL Inc. of Japan (radiative cooling film)."
+}</div>
+  <div class="body-text">
+    <h3>事实层</h3>
+    <p>每个型号一张参数表。Product 带 <code>additionalProperty</code>（制冷量、功率、适用面积、电压、冷媒、尺寸）和 <code>weight</code>。每个型号页的第一段就是一句完整结论，比如「POG-2 是一台分体式便携空调，直接接 DC 48V，6000BTU，450W，适用 8–10 m²，净重 13kg」。</p>
+    <h3>页面层</h3>
+    <p>新增 <a href="https://www.hafyoung-cooling.com/models/pog-2/">4 个型号页</a>和 3 篇指南。每篇指南对准监测里失败的一簇问题：</p>
+    <ul>
+      <li><a href="https://www.hafyoung-cooling.com/guides/portable-air-conditioner-buying-guide/">怎么选型</a>：按空间、供电、制热、冷凝水和噪音选机型。</li>
+      <li><a href="https://www.hafyoung-cooling.com/guides/tent-air-conditioner-setup/">帐篷里怎么用</a>：热风怎么排出去、冷凝水去哪、营地怎么供电。</li>
+      <li><a href="https://www.hafyoung-cooling.com/guides/oem-portable-air-conditioner-manufacturer/">OEM 采购</a>：起订量、交期、能定制什么、质保、认证。</li>
+    </ul>
+    <p>每页都带 FAQPage，问题直接用买家的原话。</p>
+    <h3>多语言</h3>
+    <p>首页有 9 种语言版本，用 hreflang 互相关联。翻译完用脚本逐条校验：型号、数字、邮箱这些 token 在译文里一个都不能丢。真踩过的坑：日文译文里混进了西里尔字母的「о」，肉眼完全看不出来，但模型和搜索引擎都会把它当成另一个词。</p>
+    <h3>提交与测量</h3>
+    <p>sitemap 之外，用 Bing Webmaster API 主动推送新网址（新站每天 100 条额度）。爬虫访问由 Cloudflare Pages 的中间件按 UA 记录，人类访客由前端脚本单独统计，两边不混。下面是统计上线第一天的爬虫访问：</p>
+  </div>
+  <table class="cmp">
+    <thead><tr><th>爬虫</th><th>类型</th><th>访问次数</th></tr></thead>
+    <tbody>
+      <tr><td>bingbot</td><td>搜索引擎</td><td class="num">24</td></tr>
+      <tr><td>Amazonbot</td><td>AI / 助手</td><td class="num">21</td></tr>
+      <tr class="best"><td>ClaudeBot</td><td>AI</td><td class="num">16</td></tr>
+      <tr><td>OAI-SearchBot</td><td>AI 搜索（ChatGPT）</td><td class="num">4</td></tr>
+      <tr><td>Googlebot</td><td>搜索引擎</td><td class="num">2</td></tr>
+      <tr><td>Baiduspider</td><td>搜索引擎</td><td class="num">2</td></tr>
+      <tr><td>PerplexityBot</td><td>AI 搜索</td><td class="num">1</td></tr>
+      <tr><td>GPTBot</td><td>AI 训练</td><td class="num">1</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <span class="section-num">§ 6 · OFF-SITE</span>
+  <h2 class="section-title">站外：<em>品类问题的主战场</em></h2>
+  <div class="body-text">
+    <p>监测数据已经说明了：品类问题的候选集被平台占着。官网在这里扮演两个角色，一是被选中之后提供可信事实，二是充当实体锚点，让模型把各处的信息归到同一家公司名下。真正把品牌带进候选集的，是站外这几件事：</p>
+    <ul>
+      <li><strong>B2B 平台</strong>：在中国制造网、阿里国际站开店或完善店铺。商品标题按买家的问法写，比如 "tent air conditioner drainage-free heating 48V DC"，参数和官网保持一致，并挂上官网链接。Accio 读的就是阿里的商品数据。</li>
+      <li><strong>sameAs</strong>：把这些官方账号写进 Organization.sameAs，平台店铺和官网才会被认成同一个实体。</li>
+      <li><strong>视频</strong>：YouTube 在监测里被引用了 8 次。实拍演示「帐篷里怎么接排风管」「POG-2 接电池」这种具体问题，描述里带官网链接。</li>
+      <li><strong>第三方</strong>：测评、经销商页面、展会名录。HKTDC 的供应商名录就出现在引用里。</li>
+    </ul>
+  </div>
+  <div class="insight">
+    <span class="insight-label">优先级</span>
+    <h3>先站内，再站外，但别停在站内</h3>
+    <p>站内的修复成本低、见效快，还能防止 AI 说错，所以先做。但只做站内，结果就停在「被点名才出现」。品类问题的提及率，最终取决于站外信源的密度和一致性。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 7 · INDEXING</span>
+  <h2 class="section-title">上线当天：<em>收录实测</em></h2>
+  <table class="cmp">
+    <thead><tr><th>检查项</th><th>结果</th></tr></thead>
+    <tbody>
+      <tr><td>Google：首页、中文页</td><td>已收录，最近抓取在 10-30 和 10-27</td></tr>
+      <tr><td>Google：新型号页和指南</td><td>URL is unknown to Google（还没被发现）</td></tr>
+      <tr><td>Google：sitemap</td><td>最后一次下载是 2026-06-18，还是旧站的 26 个网址，需要重新提交</td></tr>
+      <tr><td>Google：过去 28 天展示</td><td>1 次，落在一个旧网址上</td></tr>
+      <tr class="best"><td>Bing：API 推送</td><td>10 个网址提交成功，C18 型号页几分钟内被抓取</td></tr>
+      <tr><td>Bing：sitemap</td><td>已提交，排队中</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text">
+    <p>这一节最大的教训是：换了新站，不能指望搜索引擎自己发现。Google 拿着半年前的旧 sitemap 一直没重新下载，新页面就一直是「未知」。重新提交 sitemap，并对重点页面「请求编入索引」，是改版后的第一件事。</p>
+    <p>还有一个小坑：直接从服务器抓 Bing 的搜索结果页来测排名，拿到的是天气、旅游这类毫不相关的结果。它把请求识别成了机器人。测收录和排名，要以站长后台和官方接口为准。</p>
+  </div>
+</section>
+
+<section>
+  <span class="section-num">§ 8 · CHECKLIST</span>
+  <h2 class="section-title">复现清单：<em>九步</em></h2>
+  <table class="cmp">
+    <thead><tr><th>#</th><th>步骤</th><th>做什么</th><th>怎么验证</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>体检</td><td>SEO、GEO 两张评分卡</td><td>总分和扣分项</td></tr>
+      <tr><td class="num">2</td><td>基线监测</td><td>20 题，覆盖品类、品牌、多语言</td><td>提及率、引用率、被引用的域名</td></tr>
+      <tr><td class="num">3</td><td>抓取</td><td>robots 放行、正文直出、llms.txt、用爬虫 UA 实测</td><td>爬虫访问日志</td></tr>
+      <tr><td class="num">4</td><td>实体</td><td>Organization、Brand、sameAs、消歧描述</td><td>AI 回答里不再撞名</td></tr>
+      <tr><td class="num">5</td><td>页面</td><td>一个实体一个 URL，结论放第一段，FAQPage</td><td>回答开始引用型号页</td></tr>
+      <tr><td class="num">6</td><td>事实</td><td>参数表、带单位的数字、不用指代词</td><td>回答里引用的数字是对的</td></tr>
+      <tr><td class="num">7</td><td>提交</td><td>sitemap、Bing API、GSC 请求编入索引</td><td>URL Inspection 和 GetUrlInfo 的状态</td></tr>
+      <tr><td class="num">8</td><td>站外</td><td>平台店铺、sameAs、视频、第三方</td><td>品类问题开始提到品牌</td></tr>
+      <tr class="best"><td class="num">9</td><td>复测</td><td>每周跑一次监测</td><td>看趋势，不看单次</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text">
+    <p>下一轮监测的问题集不变，重点看那 14 个品类问题里有没有开始出现 HAFYOUNG，以及品牌问题里那三类错误是否消失。有了结果会补在这篇后面。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div><a href="https://yizhiqianbi.github.io/blog/">一支铅笔</a> · Growth Notes</div>
+  <div class="footer-right">GEO / SEO · 2026.11.01</div>
+</footer>
+</body>
+</html>
